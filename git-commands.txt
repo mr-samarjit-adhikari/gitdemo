@@ -1,0 +1,154 @@
+==== Viewing the commit history ====
+$git log
+
+$git log -p -2
+
+$git log ---stat
+
+$git log --pretty=oneline
+
+$git log --pretty=format:"%h - %an, %ar: %s"
+
+$git log --pretty=format:"%h %s"  --graph
+
+$git log -S function_name
+
+==== Undoing things ====
+
+$git commit --amend
+
+$git reset HEAD <filename> =>for unstaging
+
+$git checkout -- <filename>
+
+==== Working with Remotes(Git hub) =====
+
+$git remote --> shows short name of remote server , default name is 'origin'
+
+$git remote -v
+
+$git remote add <shortname> <url>
+
+==>Fetching and Pulling from Your Remotes
+$git fetch [remote-name]
+
+$git push origin master
+
+==>Inspecting a Remote
+$git remote show
+
+$git remote rename <original name> <newName>
+
+$git remote remove <current remote name>
+
+===== tagging ========
+$ git tag  --> Listing of tags
+$ Creating tags 
+  1. light weight tag
+  2. annotated
+
+$git tag -a "tagname" -m "comment"
+$git show <tagname>
+$git tag <tagname>
+
+-- Pushing a tag to remote server 
+$git push origin <tagname>
+$git push origin --tags  [to push all tags]
+
+Checking out tags are not possible. Need to do check out using branch name 
+
+$git checkout -b <version2> <tag name>
+
+============= Git branching and merging ==================
+Understand how git stores data
+==> creating a new branch. 
+
+$git branch <branch name>
+
+$git log --online --decorate [shows you where the branch pointers are pointing]
+
+--> Switching branch 
+
+$ git checkout <testing branch>
+
+$ git checkout master 
+  - Switching back to master will do 2 things 
+  a. Move the HEAD pointer to master
+  b. Revert all your file changes and points to master label 
+
+$ git commit -m "change in master branch" <test file>
+
+$ git log --oneline --decorate --graph --all
+
+==> Working with branch 
+- To delete the branch 
+
+$git merge <hotfix branch name>   --> To merge it back to master
+
+$git branch -d <hotfix branch name> --> Hotfix branch name already pointing to master
+
+$git branch --merged -->To see which branches are already merged into the branch you’re on
+
+$git brach =>to list down all branches
+
+$ git branch --no-merged  (which branches are not merged)
+
+===============  Remote Branches =============
+
+$ git clone <url>
+
+  <remote content advances>
+
+$ git fetch origin   --> It will only download obj and ref
+
+$ git merge FETCH_HEAD  ("$git pull origin master" is shorthand for above 2 commands)
+
+==> Tracking branches 
+   1. Local branch is called "Tracking branch"
+   2. Remote branch is called "Upstream branch"
+
+----- Setting up other tracking branches -----
+syntax:  git checkout -b [branch] [remotename]/[branch]
+ 
+$ git checkout -b serverfix origin/serverfix 
+
+$ git checkout --track origin/serverfix  -> A shortcut of about command
+
+$ git checkout serverfix  -> A shortcut of above shortcut
+
+=> To set up a local branch with a different name than remote branch 
+
+$ git checkout -b sf origin/serverfix
+
+=> if you already have local branch and want to set it to remote branch 
+
+$ git branch --set-upstream-to  origin/serverfix
+
+ => To see what are the tracking branches 
+
+$ git branch -vv (since the last time you fetched from each server)
+
+=> Deleting a remote branch 
+
+$ git push origin --delete <serverfix branch>
+
+======================== Git rebase ================================
+
+syntax: git rebase [--onto <newbase>] [<upstream>] [branch]
+
+e.g.
+$git checkout <current branch like testing>
+$git rebase <up stream branch like master>  
+--> Above 2 commands will apply chnages from current brach to upstream branch
+
+$git --onto master server client ['server'/'client' are 2 topic branches]
+
+After above command you need to fast forward the master branch by
+$git checkout master 
+$git merge <branch name from where changes will be replying onto master, like testing>
+
+if you want to merge server changes onto master branch 
+$git rebase server client
+
+
+
